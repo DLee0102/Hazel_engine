@@ -1,0 +1,12 @@
+# Binaries
+build/
+
+# Hazel files
+*.log
+
+# Visual Studio files and folder
+.vscode/
+
+
+# Directories
+Hazel/vendor/
