@@ -14,13 +14,14 @@ set(glfw3_DIR ${PROJECT_SOURCE_DIR}/Hazel/vendor/GLFW/build/lib/cmake/glfw3)
 find_package(glfw3 3.3 REQUIRED)
 # GLFW的cmake文件有bug，build后还需要cmake --install . 才能生成所需glfw3Targets.cmake文件，同时须修改cmake_install.cmake的安装路径到项目下 
 find_package(OpenGL REQUIRED)
+message(${OPENGL_LIBRARIES})
 
-add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp)
+add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp ./src/Platform/WindowsWindow.cpp)
 
 target_precompile_headers(Hazel PUBLIC ./hzpch.h)   # dll和exe文件的cmakelists都要加这句
 
 # ???由于spdlog和glfw在链接时将头文件直接链接到了库里面，所以这里不用显示调用target_include_directories
-target_link_libraries(Hazel PUBLIC spdlog::spdlog glfw)  # spdlog按官方教程这个库若用编译版本则照此写法不需要target_include_directories
+target_link_libraries(Hazel PUBLIC spdlog::spdlog glfw ${OPENGL_LIBRARIES})  # spdlog按官方教程这个库若用编译版本则照此写法不需要target_include_directories
 
 target_include_directories(Hazel PUBLIC
                          ${PROJECT_SOURCE_DIR}/Hazel/src

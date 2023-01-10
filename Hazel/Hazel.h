@@ -4,7 +4,6 @@
 // 方便客户端进行引用
 
 #include "Hazel/Application.h"
-#include "Hazel/Log.h"
 
 
 // ----Entry Point--------------

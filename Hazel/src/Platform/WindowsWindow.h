@@ -6,7 +6,7 @@
 
 namespace Hazel {
 
-    class WindowsWindow : public Windows
+    class WindowsWindow : public Window
     {
     public:
         WindowsWindow(const WindowProps& props);
@@ -20,6 +20,23 @@ namespace Hazel {
         // Window attributes
         inline void SetEventCallback(const EventCallbackFn& callback) override { m_Data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
-        bool IsVSync() 
-    }
+        bool IsVSync() const override;
+    private:
+        virtual void Init(const WindowProps& props);
+        virtual void Shutdown();
+    private:
+        GLFWwindow* m_Window;
+
+        // 打包数据
+        struct WindowData
+        {
+            std::string Title;
+            unsigned int Width, Height;
+            bool VSync;
+
+            EventCallbackFn EventCallback;
+        };
+
+        WindowData m_Data;
+    };
 }

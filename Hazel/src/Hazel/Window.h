@@ -1,6 +1,5 @@
 #pragma once
 
-#include "hzpch.h"
 
 #include "Hazel/Core.h"
 #include "Hazel/Events/Event.h"
@@ -29,7 +28,7 @@ namespace Hazel {
 
         virtual ~Window() {}
 
-        virtual void OnUpadte() = 0;
+        virtual void OnUpdate() = 0;
 
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
@@ -39,7 +38,7 @@ namespace Hazel {
         virtual void SetVSync(bool enabled) = 0;
         virtual bool IsVSync() const = 0;
 
-        static Window* Creat(const WindowProps& props = WindowProps())
+        static Window* Create(const WindowProps& props = WindowProps());
     };
     
 }

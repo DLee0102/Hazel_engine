@@ -1,4 +1,3 @@
-#include "Hazel/Log.h"
 
 // 初始化
 
