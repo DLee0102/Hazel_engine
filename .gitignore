@@ -9,4 +9,5 @@ build/
 
 
 # Directories
-Hazel/vendor/
+Hazel/vendor/GLFW/build
+Hazel/vendor/spdlog/build
