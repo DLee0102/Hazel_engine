@@ -77,6 +77,7 @@ namespace Hazel {
 
     class HAZEL_API MosueBuuttonReleasedEvent : public MouseButtonEvent
     {
+    public:
         MosueBuuttonReleasedEvent(int button)
             : MouseButtonEvent(button) {}
         
