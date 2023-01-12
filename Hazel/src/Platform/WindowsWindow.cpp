@@ -45,6 +45,8 @@ namespace Hazel {
             int success = glfwInit();
             // 用于Debug
             HZ_CORE_ASSERT(success, "Could not initialize GLFW!");
+            // 函数指针：允许将函数指针作为参数列表的函数调用传入的函数指针的函数，即允许部分内容自定义，可以传入Lamda函数
+            // 注意：(*函数名)和函数名表达的意思相同
             glfwSetErrorCallback(GLFWErrorCallback);
             s_GLFWInitialized = true;
         }
@@ -59,7 +61,7 @@ namespace Hazel {
         // Set GLFW callbacks
         glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
         {
-            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+            WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);  // 强制类型转换
             data.Width = width;
             data.Height = height;
 
@@ -74,6 +76,7 @@ namespace Hazel {
             data.EventCallback(event);
         });
 
+        // This function sets the key callback of the specified window, which is called when a key is pressed, repeated or released.
         glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
             WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
@@ -139,11 +142,12 @@ namespace Hazel {
 
     void WindowsWindow::Shutdown()
     {
-        glfwDestroyWindow(m_Window);
+        glfwDestroyWindow(m_Window);      // 销毁GLFWwindow类型对象
     }
 
     void WindowsWindow::OnUpdate()
-    {
+    {   
+        // 告诉GLFW检查所有等待处理的事件和消息，包括操作系统和窗口系统中应当处理的消息。如果有消息正在等待，它会先处理这些消息再返回；否则该函数会立即返回
         glfwPollEvents();
         glfwSwapBuffers(m_Window);
     }
@@ -152,7 +156,7 @@ namespace Hazel {
     {
         if (enabled)
             // Returns whether the specified extension is available.
-            glfwSwapInterval(1);
+            glfwSwapInterval(1);    //交换间隔为1可以避免撕裂
         else
             glfwSwapInterval(0);
         

@@ -61,7 +61,7 @@ namespace Hazel {
     class EventDispatcher
     {
         template<typename T>
-        using EventFn = std::function<bool(T&)>;
+        using EventFn = std::function<bool(T&)>;    // 包装器：接受一个T&类型的参数，并返回bool类型的参数
     public:
         // 构造函数中给类变量赋值
         EventDispatcher(Event& event)

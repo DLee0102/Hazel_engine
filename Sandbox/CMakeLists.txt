@@ -14,7 +14,7 @@ find_package(glfw3 3.3 REQUIRED)
 
 # 找到系统中的OpenGL库(Windows系统编译OpenGL所必须)
 find_package(OpenGL REQUIRED)
-message(${OPENGL_LIBRARIES})
+# message(${OPENGL_LIBRARIES})
 
 # 找到Glad库
 find_library(GLAD_LIBRARIES Glad ${CMAKE_BINARY_DIR}/lib REQUIRED)

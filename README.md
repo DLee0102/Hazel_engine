@@ -25,4 +25,10 @@
 - 结构体亦可用构造函数初始化
 - 预编译头文件可以减少编译时间
 - nullptr等价于NULL，但nullptr更先进, Destroys the specified window and its context.
+- Lamda函数
+- 函数指针
+  - 允许将函数指针作为参数列表的函数调用传入的函数指针的函数，即允许部分内容由调用者自定义
+  - 可以传入Lamda函数
+  - 注意：(*函数名)和函数名表达的意思相同
+
 

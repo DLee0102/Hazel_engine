@@ -18,7 +18,7 @@ namespace Hazel {
     private:
         bool OnWindowClose(WindowCloseEvent& e);
 
-        std::unique_ptr<Window> m_Window;   // 独占式的，某一时刻只能有一个unique_ptr指向指定的对象
+        std::unique_ptr<Window> m_Window;   // 独占式的，某一时刻只能有一个unique_ptr指向指定的对象。其他性质和shared_ptr相同
         bool m_Running = true;
     };
     // To be defined in CLIENT
