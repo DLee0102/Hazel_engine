@@ -4,6 +4,7 @@
 
 #ifdef HZ_PLATFORM_WINDOWS
     #ifdef HZ_BUILD_DLL
+    // 同为dllexport时也可编译通过
         #define HAZEL_API __declspec(dllexport)
     #else
         #define HAZEL_API __declspec(dllimport)

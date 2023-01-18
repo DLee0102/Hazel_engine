@@ -41,8 +41,10 @@ namespace Hazel {
     class HAZEL_API Event
     {
         // 友元：允许非成员函数函数访问私有数据
-        friend class EventDispatcher;
+        // friend class EventDispatcher;
     public:
+        bool Handled = false;
+
         // const修饰成员函数作用：该函数不能修改对象的成员变量
         // = 0 含义：纯虚函数，无函数体
         virtual EventType GetEventType() const = 0;
@@ -54,11 +56,10 @@ namespace Hazel {
         {
             return GetCategoryFlags() & category;     // 返回 0 则说明不属于category类
         }
-    protected:
-        bool m_Handled = false;
+        
     };
 
-    class EventDispatcher
+    class HAZEL_API EventDispatcher
     {
         template<typename T>
         using EventFn = std::function<bool(T&)>;    // 包装器：接受一个T&类型的参数，并返回bool类型的参数
@@ -74,7 +75,7 @@ namespace Hazel {
         {
             if (m_Event.GetEventType() == T::GetStaticType())
             {
-                m_Event.m_Handled = func(*(T*)&m_Event);
+                m_Event.Handled = func(*(T*)&m_Event);
                 return true;
             }
             return false;

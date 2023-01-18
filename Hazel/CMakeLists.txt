@@ -5,6 +5,8 @@
 # 构建Glad库时所需
 # add_subdirectory(vendor/Glad)
 
+# MinGW 调试和发布时不需要添加链接Runtime library的任何规则（比如/MDd, /MD等），Runtime Library是MSVC的特色
+
 # 找到spdlog库
 if(NOT TARGET spdlog)
   # Stand-alone build
@@ -25,7 +27,10 @@ find_package(OpenGL REQUIRED)
 find_library(GLAD_LIBRARIES Glad ${CMAKE_BINARY_DIR}/lib REQUIRED)
 
 # 构建Hazel动态库文件
-add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp ./src/Platform/WindowsWindow.cpp ./vendor/GLAD/src/glad.c)
+add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp ./src/Platform/WindowsWindow.cpp ./src/Hazel/LayerStack.cpp ./src/Hazel/Layer.cpp)
+
+# 添加预编译的宏(是否构建dll文件)：经过验证，此种写法能有效只为Hazel预编译宏定义，与PUBLIC和PRIVATE无关
+target_compile_definitions(Hazel PRIVATE -DHZ_BUILD_DLL)
 
 # 预编译固定的头文件
 target_precompile_headers(Hazel PUBLIC ./hzpch.h)   # dll和exe文件的cmakelists都要加这句
