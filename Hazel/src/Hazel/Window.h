@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "Hazel/Core.h"
 #include "Hazel/Events/Event.h"
 

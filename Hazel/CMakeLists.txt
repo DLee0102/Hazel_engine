@@ -30,7 +30,8 @@ find_library(GLAD_LIBRARIES Glad ${CMAKE_BINARY_DIR}/lib REQUIRED)
 add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp ./src/Platform/WindowsWindow.cpp ./src/Hazel/LayerStack.cpp ./src/Hazel/Layer.cpp)
 
 # 添加预编译的宏(是否构建dll文件)：经过验证，此种写法能有效只为Hazel预编译宏定义，与PUBLIC和PRIVATE无关
-target_compile_definitions(Hazel PRIVATE -DHZ_BUILD_DLL)
+# GLFW_INCLUDE_NONE作用：在glfw.h中可搜索该宏，此处可解决和新版glad头文件中部分定义冲突的问题
+target_compile_definitions(Hazel PRIVATE -DHZ_BUILD_DLL  PRIVATE -DGLFW_INCLUDE_NONE)
 
 # 预编译固定的头文件
 target_precompile_headers(Hazel PUBLIC ./hzpch.h)   # dll和exe文件的cmakelists都要加这句

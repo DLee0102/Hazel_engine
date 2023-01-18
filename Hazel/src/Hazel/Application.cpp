@@ -1,7 +1,7 @@
 #include "Application.h"
 
 #include "Hazel/Events/MouseEvent.h"
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 
 namespace Hazel {
@@ -16,6 +16,9 @@ namespace Hazel {
         // std::bind onEvent与SetEventCallback的参数EventCallbackFn &callback进行绑定
         // EventCallbackFn是一个function包装器，接受一个Event&类型参数，返回值为空
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+
+        unsigned int id;
+        glGenVertexArrays(1, &id);
     }
 
     Application::~Application()
