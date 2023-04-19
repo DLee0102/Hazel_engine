@@ -1,6 +1,16 @@
 # Hazel_engine's CMakeLists.txt 作者(Author)：丁利(github: DLee0102)
 # 四川大学软件学院(Software Engineering College of Sichuan University)
 
+# 关于多编译器混合编译的说明：
+# 首先，不同编译器编译的包处于同于项目中可能会报错
+# 其次，由于系统默认编译器路径和cmake配置中使用的编译器不同，可能导致最后生成的exe文件在运行时找不到程序入口
+# 原因就是exe文件找不到libstdc++-6.dll这个动态库文件（默认通过系统环境变量路径找dll，所以如果默认编译器和build用的
+# 编译器不一样，就会运行时报错），像QT这种使用自带编译器的库解决办法是将我们build所用的编译器的libstdc++-6.dll贴到
+# 和exe文件同级目录下。若遇到其他编译器冲突的问题，也可以采用这种解决思路
+
+# 由于Windows下不同的编译器会链接不同的运行时库（.dll），如果不清楚到底最终发布程序时应该复制哪些库
+# 则应该观察调试时调试控制台的gdb的加载信息。（也可以采用静态编译解决该问题）
+
 cmake_minimum_required(VERSION 3.10)
 
 

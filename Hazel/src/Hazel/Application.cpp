@@ -7,6 +7,7 @@
 namespace Hazel {
 
 // 静态成员函数其实可以看做是全局函数，而非静态成员函数则需要传递this指针作为第一个参数，所以std::bind能很容易地绑定成员函数
+// 包装器和bind? std::bind()返回std::function的对象
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application::Application()
@@ -25,6 +26,7 @@ namespace Hazel {
     {
     }
 
+
     void Application::PushLayer(Layer* layer)
     {
         m_LayerStack.PushLayer(layer);
@@ -37,7 +39,9 @@ namespace Hazel {
 
     void Application::OnEvent(Event& e)
     {
+        // 接收到的事件为e
         EventDispatcher dispatcher(e);
+        // 判断接收到的事件是否被调度为窗口关闭事件
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
         HZ_CORE_TRACE("{0}", e);

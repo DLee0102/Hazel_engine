@@ -13,6 +13,7 @@ namespace Hazel {
             delete layer;
     }
 
+    // 压入Layer
     void LayerStack::PushLayer(Layer* layer)
     {
         m_LayerInsert = m_Layers.emplace(m_LayerInsert, layer);
@@ -23,6 +24,7 @@ namespace Hazel {
         m_Layers.emplace_back(overlay);
     }
 
+    // 弹出Layer
     void LayerStack::PopLayer(Layer* layer)
     {
         auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);

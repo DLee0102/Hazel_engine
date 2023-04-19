@@ -2,10 +2,12 @@
 # set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 # set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-# 构建Glad库时所需
+# # 构建Glad库时所需
 # add_subdirectory(vendor/Glad)
 
 # MinGW 调试和发布时不需要添加链接Runtime library的任何规则（比如/MDd, /MD等），Runtime Library是MSVC的特色
+
+# set(CMAKE_PREFIX_PATH ${PROJECT_SOURCE_DIR}/Hazel/vendor)
 
 # 找到spdlog库
 if(NOT TARGET spdlog)
