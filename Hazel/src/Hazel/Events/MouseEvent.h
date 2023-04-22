@@ -40,7 +40,6 @@ namespace Hazel {
             ss << "MouseScrolledEvent: " << GetXOffset() << ", " << GetYOffset();
             return ss.str(); 
         }
-
         EVENT_CLASS_TYPE(MouseScrolled)
         EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
     private:

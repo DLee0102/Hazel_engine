@@ -3,6 +3,7 @@
 #include "Hazel/Core.h"
 #include "Hazel/Events/Event.h"
 
+// Hazel和窗口界面的接口
 namespace Hazel {
 
     struct WindowProps

@@ -11,6 +11,8 @@
 # 由于Windows下不同的编译器会链接不同的运行时库（.dll），如果不清楚到底最终发布程序时应该复制哪些库
 # 则应该观察调试时调试控制台的gdb的加载信息。（也可以采用静态编译解决该问题）
 
+# Vscode有Bug，有时会出现找不出原因的undefined reference，此时删除cmake缓存重启Vscode即可
+
 cmake_minimum_required(VERSION 3.10)
 
 
@@ -33,17 +35,21 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 project(Hazel_engine CXX)
 
 # 设置预编译的宏
+
 # 是否在Windows平台下编译
 add_compile_definitions(HZ_PLATFORM_WINDOWS)
 # option(HZ_PLATFORM_WINDOWS "if on Windows" ON)    // 旧版用add_definition需要此句
 
-# # 是否构建Hazel动态库文件
-# add_compile_definitions(HZ_BUILD_DLL)
+# 是否构建Hazel动态库文件
+# add_compile_definitions(HZ_BUILD_DLL)     # 在Hazel的cmake文件中已定义，故此处注释掉
 # option(HZ_BUILD_DLL "if build dll" ON)
 
 # 是否添加Assertion（断言）功能--发行版本可删除此宏
 add_compile_definitions(HZ_ENABEL_ASSERTS)
 # option(HZ_ENABEL_ASSERTS "if ENABEL_ASSERTS" ON)
+
+# 处理glad和glfw inlcude的头文件重合时报错的问题
+# add_compile_definitions(GLFW_INCLUDE_NONE)    # 在Hazel的cmake文件中已定义，故此处注释掉
 
 add_subdirectory(Hazel)
 

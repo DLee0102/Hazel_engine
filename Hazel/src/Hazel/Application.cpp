@@ -1,6 +1,5 @@
 #include "Application.h"
 
-#include "Hazel/Events/MouseEvent.h"
 #include <glad/glad.h>
 
 
@@ -10,16 +9,19 @@ namespace Hazel {
 // 包装器和bind? std::bind()返回std::function的对象
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+    Application* Application::s_Instance = nullptr;
+
     Application::Application()
     {
+        // 确保只有一个application实例
+        HZ_CORE_ASSERT(!s_Instance, "Application already exists!");
+        s_Instance = this;
+
         m_Window = std::unique_ptr<Window>(Window::Create());
 
         // std::bind onEvent与SetEventCallback的参数EventCallbackFn &callback进行绑定
         // EventCallbackFn是一个function包装器，接受一个Event&类型参数，返回值为空
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
-
-        unsigned int id;
-        glGenVertexArrays(1, &id);
     }
 
     Application::~Application()
@@ -30,11 +32,13 @@ namespace Hazel {
     void Application::PushLayer(Layer* layer)
     {
         m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* layer)
     {
         m_LayerStack.PushOverlay(layer);
+        layer->OnAttach();
     }
 
     void Application::OnEvent(Event& e)

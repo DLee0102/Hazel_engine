@@ -4,6 +4,8 @@
 
 # # 构建Glad库时所需
 # add_subdirectory(vendor/Glad)
+# 构建ImGui库时所需
+# add_subdirectory(vendor/imgui)
 
 # MinGW 调试和发布时不需要添加链接Runtime library的任何规则（比如/MDd, /MD等），Runtime Library是MSVC的特色
 
@@ -28,8 +30,19 @@ find_package(OpenGL REQUIRED)
 # 找到Glad库
 find_library(GLAD_LIBRARIES Glad ${CMAKE_BINARY_DIR}/lib REQUIRED)
 
+# 找到IMGUI库
+find_library(IMGUI_LIBRARIES ImGui ${CMAKE_BINARY_DIR}/lib REQUIRED)
+
 # 构建Hazel动态库文件
-add_library(Hazel SHARED ./src/Hazel/Application.cpp ./src/Hazel/Log.cpp ./src/Platform/WindowsWindow.cpp ./src/Hazel/LayerStack.cpp ./src/Hazel/Layer.cpp)
+add_library(Hazel SHARED
+         ./src/Hazel/Application.cpp 
+         ./src/Hazel/Log.cpp 
+         ./src/Platform/Windows/WindowsWindow.cpp 
+         ./src/Hazel/LayerStack.cpp 
+         ./src/Hazel/Layer.cpp
+         ./src/Platform/OpenGL/ImGuiOpenGLRenderer.cpp
+         ./src/Hazel/ImGui/ImGuiLayer.cpp
+         )
 
 # 添加预编译的宏(是否构建dll文件)：经过验证，此种写法能有效只为Hazel预编译宏定义，与PUBLIC和PRIVATE无关
 # GLFW_INCLUDE_NONE作用：在glfw.h中可搜索该宏，此处可解决和新版glad头文件中部分定义冲突的问题
@@ -40,12 +53,14 @@ target_precompile_headers(Hazel PUBLIC ./hzpch.h)   # dll和exe文件的cmakelis
 
 #链接找到的所需的库文件
 # ???由于spdlog和glfw在链接时将头文件直接链接到了库里面，所以这里不用显示调用target_include_directories
-target_link_libraries(Hazel PUBLIC spdlog::spdlog glfw ${OPENGL_LIBRARIES} ${GLAD_LIBRARIES})  # spdlog按官方教程这个库若用编译版本则照此写法不需要target_include_directories
+target_link_libraries(Hazel PUBLIC spdlog::spdlog glfw ${OPENGL_LIBRARIES} ${GLAD_LIBRARIES} ${IMGUI_LIBRARIES})  # spdlog按官方教程这个库若用编译版本则照此写法不需要target_include_directories
 
 #添加所需头文件
 target_include_directories(Hazel PUBLIC
+                         ${PROJECT_SOURCE_DIR}/Hazel
                          ${PROJECT_SOURCE_DIR}/Hazel/src
                          ${PROJECT_SOURCE_DIR}/Hazel/vendor/Glad/include
+                         ${PROJECT_SOURCE_DIR}/Hazel/vendor/imgui
                            )
 
 

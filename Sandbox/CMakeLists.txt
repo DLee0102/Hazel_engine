@@ -34,6 +34,7 @@ target_include_directories(Sandbox PUBLIC
                            ${PROJECT_SOURCE_DIR}/Hazel/src
                            ${PROJECT_SOURCE_DIR}/Hazel
                            ${PROJECT_SOURCE_DIR}/Hazel/vendor/Glad/include
+                           ${PROJECT_SOURCE_DIR}/Hazel/vendor/imgui
                            )
 
 
